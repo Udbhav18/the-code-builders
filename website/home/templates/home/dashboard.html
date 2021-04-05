@@ -1,0 +1,35 @@
+{% extends 'home/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+		<br>
+		<!--ShowCase-->
+		<header class="showcase" style="background: url({% static 'home/img/tcb_5.png' %}) no-repeat center center/cover;">
+			<img src = "{% static 'home/img/logo3.png' %}" height = "50%">
+			<h2>The Code Builder</h2>
+			<p>
+        		The Code Builder is a series of a wide range of events to be held in the month of October 2020, completely safe and virtual.
+            </p>
+      		<a href="{% url 'announcements' %}" class="btn">
+      			Announcements <i class="fas fa-chevron-right"></i>
+      		</a>
+		</header>
+		<br>
+		<div class = "subsec"><p>My Event Pass</p></div>
+		<br>
+		<hr>
+		<br>
+		<br>
+		<section class="xbox" style="background: url({% static 'home/img/xbox.png' %}) no-repeat center center/cover;">
+			<div class="content">
+				<h2>Event Pass</h2>
+		        <p>A single pass grants you access to everything, that will be held as a part of The Code Builder.</p>
+		        <a class="btn">
+		            Owned!
+		        </a>
+			</div>
+		</section>
+
+{% endblock %}

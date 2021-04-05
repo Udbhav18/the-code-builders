@@ -1,0 +1,58 @@
+{% load static %}
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'home/css/announcement.css' %}">
+        <title>TCB - Announcements</title>
+        <link rel="shortcut icon" type="image/png" href="{% static 'home/img/icon.png' %}"/>
+    </head>
+    <body>
+        <div class="container">
+
+            <!--NAV BAR-->
+            <nav class="main-nav">
+                <a href = "{% url 'home' %}"><img src="{% static 'home/img/title.png' %}" alt="Microsoft" class="logo"></a>
+                {% if user.is_authenticated %}
+                <ul class="right-menu">
+                    <li><a href="{% url 'announcements' %}" style = "color: #262626; text-decoration: none"><i class="fas fa-bell"></i> Announcements </a></li>
+                    <li><a href="{% url 'profile' %}" style = "color: #262626; text-decoration: none"><i class="fas fa-user"></i> {{user.username}} </a></li>
+                    <li style="cursor: pointer;">
+                    <form method="POST" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" style="border: none; background-color: white; outline: none; font-family: 'aquire'; margin-top: 0.15rem"><i class="fas fa-sign-out-alt"></i> Logout </button>
+                    </form>
+                    </li>
+                </ul>
+                {% endif %}
+            </nav>
+            <br>
+            <!--ShowCase-->
+            <header class="showcase" style="background: url({% static 'home/img/tcb_5.png' %}) no-repeat center center/cover;">
+                <img src = "{% static 'home/img/logo3.png' %}" height = "50%">
+                <h2>The Code Builder</h2>
+                <p>
+                    The Code Builder is a series of a wide range of events to be held in the month of October 2020, completely safe and virtual.
+                </p>
+                <a href="{% url 'home' %}" class="btn">
+                    Home <i class="fas fa-chevron-right"></i>
+                </a>
+            </header>
+            <br>
+        </div>
+
+        {% for announcement in announcements %}
+        <div class="courses-container">
+            <div class="course">
+                <div class="course-preview" style="background: url({% static 'home/img/tcb_5.png' %}) no-repeat center center/cover; width: 50%">
+                    <h5>Announcement {{ forloop.counter }}</h5>
+                    <h2>{{ announcement.title }}</h2>
+                </div>
+                <div class="course-info">
+                    <h3>{{ announcement.content }}</h3>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </body>
+</html>

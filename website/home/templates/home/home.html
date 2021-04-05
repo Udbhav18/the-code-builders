@@ -1,0 +1,162 @@
+{% extends 'home/base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <!--ShowCase-->
+    <header class="showcase" style="background: url({% static 'home/img/tcb_5.png' %}) no-repeat center center/cover;">
+        <img src="{% static 'home/img/logo3.png' %}" height="50%">
+        <h2>The Code Builder</h2>
+        <p>
+            The Code Builder is a series of a wide range of events to be held in the month of October 2020, completely
+            safe and virtual.
+        </p>
+        {% if not user.is_authenticated %}
+            <a href="{% url 'portal' %}" class="btn">
+                Sign In <i class="fas fa-chevron-right"></i>
+            </a>
+        {% else %}
+            <a href="{% url 'dashboard' %}" class="btn">
+                Dashboard <i class="fas fa-chevron-right"></i>
+            </a>
+        {% endif %}
+    </header>
+    <ul class="nav nav-tabs">
+        {% for event_category in event_categories %}
+            <li class="nav-item {% if forloop.first %}active{% endif %}"><a
+                    class="nav-link {% if forloop.first %}active{% endif %}" data-toggle="tab"
+                    href="#{{ event_category.name|slugify }}">{{ event_category.name }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <div class="tab-content">
+        {% for event_category in event_categories %}
+            {% with events=event_category.event_set.all %}
+                <div id="{{ event_category.name|slugify }}"
+                     class="tab-pane fade show {% if forloop.first %}active{% endif %}">
+                    <div id="carouselExampleControls_{{ forloop.counter0 }}" class="carousel slide"
+                         data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            {% for event in events %}
+                                <li data-target="#carouselExampleControls_{{ forloop.parentloop.counter0 }}"
+                                    data-slide-to="{{ forloop.counter0 }}"
+                                    class="{% if forloop.first %}active{% endif %}"></li>
+                            {% endfor %}
+                        </ol>
+                        <div class="carousel-inner">
+                            {% for event in events %}
+                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                    <section class="carbon dark"
+                                             style="background: url({% static 'home/img/comp_1.png' %}) no-repeat center center/cover;">
+                                        <div class="content">
+                                            <h2>{{ event.title }}</h2>
+                                            <br>
+                                            {% if event.image_1 %}
+                                                <img src="{{ event.image_1.url }}" style="height: 7rem;">
+                                            {% endif %}
+                                            {% if event.image_2 %}
+                                                <br><br>
+                                                <img src="{{ event.image_2.url }}" style="width: 60%;">
+                                            {% endif %}
+                                            <br>
+                                            <br>
+                                            <h3> About </h3>
+                                            <hr style="background-color: white;">
+                                            {{ event.description }}
+                                            </p>
+                                            <br>
+                                            {#								<h4>Companies :</h4>#}
+                                            {#								<hr style="background-color: white;">#}
+                                            {#								<div style="margin-left: 50%; transform: translateX(-50%)">#}
+                                            {#									<figure style="display: inline-block; margin-right: 1rem">#}
+                                            {#										<img src="https://www.w3schools.com/howto/img_avatar.png" alt="Trulli" style="width:5rem; border-radius: 50%">#}
+                                            {#										<figcaption style="text-align: center;">Tim</figcaption>#}
+                                            {#									</figure>#}
+                                            {#									<figure style="display: inline-block;">#}
+                                            {#										<img src="https://www.w3schools.com/howto/img_avatar2.png" alt="Trulli" style="width:5rem; border-radius: 50%">#}
+                                            {#										<figcaption style="text-align: center;">Nancy</figcaption>#}
+                                            {#									</figure>#}
+                                            {#								</div>#}
+                                            {#								<p>	Mentor 1 : Detail<br><br>#}
+                                            {#								Mentor 2 : Detail					#}
+                                            {#								<hr style="background-color: white">#}
+                                            <br><br><br>
+                                        </div>
+                                    </section>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleControls_{{ forloop.counter0 }}"
+                           role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleControls_{{ forloop.counter0 }}"
+                           role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+            {% endwith %}
+        {% endfor %}
+    </div>
+    <br><br>
+    {% if not user.is_authenticated %}
+        <section class="xbox" style="background: url({% static 'home/img/xbox.png' %}) no-repeat center center/cover;">
+            <div class="content">
+                <h2>Event Pass</h2>
+                <p>A single pass grants you access to everything, that will be held as a part of The Code Builder.</p>
+                <a href="{% url 'portal' %}" class="btn">
+                    Buy Now (₹2100) <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+        </section>
+    {% endif %}
+    <br>
+    <!-- Carbon -->
+    <section class="carb dark"
+             style="background: url({% static 'home/img/carbon.jpg' %}) no-repeat center center/cover;">
+        <div class="content">
+            <h2>About Us</h2>
+            <p>
+                Join us for a truly enriching experience and to be a part of multiple Bootcamps, Workshops, Talks,
+                Summits, Competitions and Courses, on technical as well as non technical domains, as well as
+                interactions with celebrities and influencers, of the likes of Vir Das ;)
+            </p>
+            <p>
+                The topics for these include computer science, programming, artificial intelligence, website and app
+                development, game development, IoT, Cryptocurrency and Blockchain, Digital Marketing, Finance and
+                Investing, Entrepreneurship, Blogging/Content writing and much much more!
+                You'll be a part of something, on nearly each and everyday of the month of October 2020. </p>
+            </p>
+            <p>
+                The amount of information will never cease existing and neither will the memory that serves the purpose.
+                The more you accurately know about something, the greater will it reflect on you, be it the specialized
+                skill to decode the bits or encode in bytes.
+                Exploring all the encrypted data in the world is precisely what The Code Builder is all about which will
+                offer an assemblage of courses for anyone to choose from to amplify their skills.
+                The Code Builder aims to establish a dynamic community by catering to more than 2,500 aspiring
+                Candidates.
+                By providing unique insights and solutions, the Code Builder will facilitate the students to enhance
+                their prospects when it comes to the programming spectrum.
+            </p>
+            <br><br><br>
+        </div>
+    </section>
+    <br><br>
+    <!-- Xbox -->
+    {% if not user.is_authenticated %}
+        <section class="xbox" style="background: url({% static 'home/img/xbox.png' %}) no-repeat center center/cover;">
+            <div class="content">
+                <h2>Join Our Team!</h2>
+                <p>Interested? Get interned at the code builder !</p>
+                <a href="http://bit.ly/thecodebuilder" class="btn">
+                    Join Us <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+        </section>
+    {% endif %}
+    <br>
+
+{% endblock %}
